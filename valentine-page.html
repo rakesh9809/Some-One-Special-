@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💝 Will You Be My Valentine? 💝</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 50%, #f67280 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Floating Hearts Background */
+        .heart-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 30px;
+            animation: float 15s infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Main Container */
+        .container {
+            background: white;
+            padding: 50px 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            z-index: 1;
+            animation: slideIn 0.8s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .emoji {
+            font-size: 80px;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+        }
+
+        h1 {
+            color: #ff6b9d;
+            margin: 20px 0;
+            font-size: 32px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .message {
+            color: #666;
+            font-size: 18px;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        /* Buttons Container */
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Yes Button */
+        .yes-btn {
+            background: linear-gradient(135deg, #ff6b9d, #ff8fab);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-size: 22px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .yes-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 157, 0.6);
+        }
+
+        .yes-btn:active {
+            transform: translateY(0);
+        }
+
+        /* No Button - Interactive */
+        .no-btn {
+            background: linear-gradient(135deg, #e0e0e0, #f5f5f5);
+            color: #999;
+            border: 2px solid #ddd;
+            padding: 18px 50px;
+            font-size: 22px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .no-btn:hover {
+            background: linear-gradient(135deg, #f5f5f5, #fff);
+            border-color: #ff6b9d;
+            color: #ff6b9d;
+            transform: scale(1.05);
+        }
+
+        /* Cute Message Popup */
+        .cute-message {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            z-index: 1000;
+            text-align: center;
+            animation: popIn 0.3s ease-out;
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .cute-message h2 {
+            color: #ff6b9d;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .cute-message p {
+            color: #666;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .close-btn {
+            background: #ff6b9d;
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: #ff8fab;
+            transform: scale(1.05);
+        }
+
+        /* Success Message */
+        .success-container {
+            display: none;
+        }
+
+        .success-message {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .success-message h2 {
+            color: #ff6b9d;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .success-message .big-emoji {
+            font-size: 100px;
+            animation: heartbeat 1s infinite;
+        }
+
+        .success-message p {
+            color: #666;
+            font-size: 20px;
+            margin-top: 20px;
+        }
+
+        /* Hidden Form */
+        #emailForm {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Hearts Background -->
+    <div class="heart-bg" id="heartBg"></div>
+
+    <!-- Main Container -->
+    <div class="container" id="mainContainer">
+        <div class="emoji">💝</div>
+        <h1>Will You Be My Valentine?</h1>
+        <p class="message">
+            Meri Valentine banogi? 🌹<br>
+            Mere dil ko khushi se bhar do! 💕
+        </p>
+
+        <div class="buttons">
+            <button class="yes-btn" onclick="submitYes()">💖 Yes!</button>
+            <button class="no-btn" onclick="showCuteMessage()">💔 No</button>
+        </div>
+    </div>
+
+    <!-- Success Container -->
+    <div class="container success-container" id="successContainer">
+        <div class="success-message">
+            <div class="big-emoji">🎉💕✨</div>
+            <h2>Yayyyy! 🥰</h2>
+            <p>Tumne mera dil jeet liya! 💝<br>Best Valentine's Day ever! 🌹</p>
+        </div>
+    </div>
+
+    <!-- Cute Message Popup -->
+    <div class="cute-message" id="cuteMessage">
+        <h2 id="cuteMessageTitle">💕 Aww!</h2>
+        <p id="cuteMessageText">Cutie please maan jao na! 🥺</p>
+        <button class="close-btn" onclick="closeCuteMessage()">Okay 💖</button>
+    </div>
+
+    <!-- Hidden Email Form -->
+    <form id="emailForm" action="https://formsubmit.co/YOUR_EMAIL@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="💕 Someone Clicked YES on Valentine Page!">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="Message" value="🎉 किसी ने YES click किया! Someone accepted your Valentine proposal! 💝">
+        <input type="hidden" name="Response" value="YES - Valentine Accepted! 💕">
+        <input type="hidden" name="Timestamp" id="timestamp">
+        <input type="hidden" name="_next" value="">
+    </form>
+
+    <script>
+        // Generate floating hearts
+        const heartBg = document.getElementById('heartBg');
+        const heartEmojis = ['❤️', '💕', '💖', '💗', '💝', '💘'];
+        
+        for (let i = 0; i < 20; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 15 + 's';
+            heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            heartBg.appendChild(heart);
+        }
+
+        // Cute messages for No button
+        const cuteMessages = [
+            { title: "💕 Aww!", text: "Cutie please maan jao na! 🥺" },
+            { title: "🥺 Please!", text: "Ek baar soch lo... tumhare bina Valentine's Day adhoora hai! 💔" },
+            { title: "💖 Ruk Jao!", text: "Itni jaldi mat karo... socho zara! Mera dil toot jayega 💔" },
+            { title: "🌹 Pretty Please!", text: "Tumhare bina kaise? Please Yes karo! 🙏✨" },
+            { title: "😢 Aww Come On!", text: "Tum ho toh sab hai! Please accept karo na! 💝" },
+            { title: "💘 Last Chance!", text: "Ek mauka aur do... I promise best Valentine's Day hoga! 🎉" },
+            { title: "🎁 Special Offer!", text: "Yes bolo aur unlimited pyaar free! 💕😄" },
+            { title: "✨ Think Again!", text: "No kehne se pehle... mere dil ki suno! 💓" }
+        ];
+
+        let messageIndex = 0;
+
+        function showCuteMessage() {
+            const popup = document.getElementById('cuteMessage');
+            const message = cuteMessages[messageIndex % cuteMessages.length];
+            
+            document.getElementById('cuteMessageTitle').textContent = message.title;
+            document.getElementById('cuteMessageText').textContent = message.text;
+            
+            popup.style.display = 'block';
+            messageIndex++;
+        }
+
+        function closeCuteMessage() {
+            document.getElementById('cuteMessage').style.display = 'none';
+        }
+
+        function submitYes() {
+            // Set timestamp
+            document.getElementById('timestamp').value = new Date().toLocaleString('hi-IN', {
+                dateStyle: 'full',
+                timeStyle: 'long'
+            });
+            
+            // Submit form to send email
+            document.getElementById('emailForm').submit();
+            
+            // Show success message
+            document.getElementById('mainContainer').style.display = 'none';
+            document.getElementById('successContainer').style.display = 'block';
+            
+            // Add more hearts
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.fontSize = (Math.random() * 30 + 30) + 'px';
+                    heartBg.appendChild(heart);
+                }, i * 100);
+            }
+        }
+
+        // Close popup when clicking outside
+        window.onclick = function(event) {
+            const popup = document.getElementById('cuteMessage');
+            if (event.target == popup) {
+                closeCuteMessage();
+            }
+        }
+    </script>
+</body>
+</html>
